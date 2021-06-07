@@ -1,0 +1,20 @@
+                                ***********VIEWS QUERY***********
+
+
+
+create view [adminview] as select * from tbl_admin
+
+                            OR
+
+create view [adminview] as select * from tbl_admin where ad_name = 'Rizwan'
+
+                            OR
+
+create view [adminview45] as select ad_email,ad_name from tbl_admin where ad_name = 'Ali'
+
+
+
+                               ***********JOIN IN VIEWS***********
+
+create view adminview94 as select ad_id,ad_name,ad_email from tbl_admin a inner join student s on a.ad_id = s.ad_id_fk
+select * from adminview94

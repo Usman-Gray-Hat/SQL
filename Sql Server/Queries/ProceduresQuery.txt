@@ -1,0 +1,43 @@
+create proc student123
+(
+@std_name varchar(20),
+@std_class varchar(10),
+@std_gender varchar(20),
+@std_contact varchar(20),
+@std_email varchar(30),
+@ad_id_fk int 
+)
+as
+begin
+
+
+insert into student (std_name,std_class,std_gender,std_contact,std_email,ad_id_fk) 
+values (@std_name,@std_class,@std_gender,@std_contact,@std_email,@ad_id_fk)
+
+end
+
+insert into student values ('Bilal','8','Male','03458946','bilal@outlook.com',3)
+select * from student
+
+
+
+                         **********************Update Through Procedures**********************
+
+
+create proc students124
+(
+@std_name varchar(20)
+)
+as
+begin
+
+update student
+set std_name = @std_name where std_name = @std_name
+
+end
+update student
+set std_name = 'Farhan' where std_name = 'Faizan'
+
+select * from student
+
+

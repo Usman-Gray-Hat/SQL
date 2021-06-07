@@ -1,0 +1,120 @@
+create database hospital
+use hospital
+
+create table admin
+(
+admin_id int primary key identity,
+admin_name varchar(20) not null
+)
+
+insert into admin values ('Haris Khan')
+insert into admin values ('Danish Khan')
+select * from admin
+
+
+
+create table doctors
+(
+dr_id int primary key identity,
+dr_name varchar (20) not null,
+dr_gender varchar (20) not null,
+dr_contact int unique not null,
+dr_salary int not null,
+admin_id_fk int foreign key references admin (admin_id)
+)
+
+insert into doctors values ('Dr.Rizwan','Male',065948475,250000,1)
+insert into doctors values ('Dr.Ali','Male',06534475,350000,2)
+insert into doctors values ('Dr.Usman','Male',063448475,250000,2)
+insert into doctors values ('Dr.Rida','Female',063448465,250000,1)
+insert into doctors values ('Dr.Talha','Male',065934475,350000,1)
+insert into doctors values ('Dr.Maryum','Female',065943475,50000,2)
+select * from doctors
+
+
+
+create table receptioanist 
+(
+recp_id int primary key identity,
+recp_name varchar (30) not null,
+recp_shift varchar (30) not null,
+recp_salary int not null,
+admin_id_fk int foreign key references admin (admin_id),
+dr_id_fk int foreign key references doctors (dr_id)
+)
+
+insert into receptioanist values ('Alishba','Morning',15000,1,2)
+insert into receptioanist values ('Maham','Evening',15000,2,4)
+select * from receptioanist
+
+
+
+create table patients
+(
+patient_id int primary key identity,
+patient_name varchar(20) not null,
+patient_gender varchar(30) not null,
+admin_id_fk int foreign key references admin (admin_id),
+dr_id_fk int foreign key references doctors (dr_id),
+recp_id_fk int foreign key references receptioanist (recp_id)
+)
+
+insert into patients values ('Salman Siddique','Male',2,4,1)
+insert into patients values ('Laiba Hasan','Female',2,5,2)
+insert into patients values ('Fiza Kamran','Female',2,6,2)
+insert into patients values ('Zubair Khan','Male',1,1,1)
+insert into patients values ('Hyder Ali','Male',1,2,2)
+insert into patients values ('Anum Fatima','Female',2,3,1)
+insert into patients values ('Dilawar Hussain','Male',1,2,1)
+select * from patients
+
+
+
+create table beds
+(
+bed_id int primary key identity,
+bed_no int unique,
+admin_id_fk int foreign key references admin (admin_id),
+dr_id_fk int foreign key references doctors (dr_id),
+recp_id_fk int foreign key references receptioanist (recp_id),
+patient_id_fk int foreign key references patients (patient_id)
+)
+
+insert into beds values (504,1,5,2,4)
+insert into beds values (505,2,4,2,6)
+insert into beds values (506,2,3,1,3)
+insert into beds values (507,1,1,1,5)
+insert into beds values (508,2,2,2,7)
+select * from beds
+
+
+
+select * from admin
+select * from doctors
+select * from receptioanist
+select * from patients
+select * from beds
+
+
+
+
+create view AdminViewDoctors as select dr_id,dr_name,dr_gender,dr_contact,dr_salary from doctors
+create view AdminViewReceptioanist as select recp_id,recp_name,recp_shift,recp_salary from receptioanist
+create view AdminViewPatient as select patient_id,patient_name,patient_gender from patients
+create view AdminViewBeds as select bed_id,bed_no from beds
+
+select * from AdminViewDoctors
+select * from AdminViewReceptioanist
+select * from AdminViewPatient
+select * from AdminViewBeds
+
+
+
+
+create view ReceptioanistViewDoctors as select dr_id,dr_name,dr_gender,dr_salary from doctors
+create view ReceptioanistViewPatients as select patient_name,patient_gender from patients
+create view ReceptioanistViewBeds as select bed_no from beds
+
+select * from ReceptioanistViewDoctors
+select * from ReceptioanistViewPatients
+select * from ReceptioanistViewBeds

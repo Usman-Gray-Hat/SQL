@@ -1,0 +1,57 @@
+create database school
+use school
+
+create table tbl_admin
+(
+ad_id int primary key identity,
+ad_name varchar(20) not null,
+ad_password varchar(20) not null,
+ad_email varchar(40) unique not null
+)
+
+
+
+create table student
+(
+std_id int primary key identity,
+std_name varchar(20) not null,
+std_class varchar(12) not null,
+std_gender varchar(10) not null,
+std_contact varchar(20) unique not null,
+std_email varchar(40) unique not null,
+ad_id_fk int foreign key references tbl_admin (ad_id) not null
+)
+
+
+
+create table fee
+(
+fee_id int primary key identity,
+fee_amount int,
+std_id_fk int foreign key references student (std_id) not null,
+ad_ad_fk int foreign key references tbl_admin (ad_id) not null
+)
+
+
+insert into tbl_admin(ad_name, ad_email, ad_password) values ('Rizwan','rizwan@gmail.com','abc123')
+insert into tbl_admin(ad_name, ad_email, ad_password) values ('Usman','usman@gmail.com','abc124')
+insert into tbl_admin(ad_name, ad_email, ad_password) values ('Ali','ali@gmail.com','abc125')
+insert into tbl_admin(ad_name, ad_email, ad_password) values ('Raheel','raheel@gmail.com','abc126')
+
+
+insert into student values ('Faizan',8,'Male',09481369381,'faizan@gmail.com',1)
+insert into student values ('Rida',9,'Female',09602069381,'rida@gmail.com',2)
+insert into student values ('Yasir',7,'Male',06918369381,'yasir@gmail.com',3)
+insert into student values ('Babur',10,'Male',06818369381,'babur@gmail.com',4)
+insert into student values ('Maryum',6,'Female',06965527681,'maryum@gmail.com',1)
+
+
+insert into fee values (2500,7)
+insert into fee values (3000,10)
+insert into fee values (5000,9)
+insert into fee values (2500,6)
+insert into fee values (1800,8)
+
+select * from tbl_admin
+select * from student
+select * from fee

@@ -1,0 +1,91 @@
+use school1
+
+--Two different queries of operators for same purpose--
+
+
+
+
+--Simple query(1)--
+
+select std_name,std_marks from student where std_marks < = 95 and
+std_marks > = 70
+
+
+
+
+--Between query(2)--
+
+select std_name,std_marks from student where std_marks between 70 and 95 
+
+
+
+
+--Two different queries for same purpose--
+
+
+
+
+--Query(1)--
+ 
+--(Or)--
+
+select std_name, std_marks from student where std_marks < = 75 OR 
+std_marks > = 90
+
+
+
+
+--Query(2)--
+
+--(In) must be exact value--
+
+select std_name, std_marks from student where std_marks in(89,100)
+
+
+
+
+--Change column names & add values query--
+
+select std_name as Student_Name, 
+std_marks, std_marks+2 as Total_Marks from student
+
+
+
+
+--Like Operator Queries Like(Matching)--
+
+-- 1 underscore _ means 1 character, 2 under scores "__" means two characters --
+
+-- Percentage % means zero or many characters --
+
+
+
+select std_name from student where std_name like '___a%' *****result = (Bilal,Usman)*****
+
+
+
+select std_name from student where std_name like '___w%' *****result = (Rizwan)******
+
+
+
+select std_name from student where std_name like '%s%' *****letter 's' anywhere******
+
+
+
+select std_name from student where std_name like '%L' *****result = (bilal raheel)****** 
+
+
+
+select std_name from student where std_name like 'u%' *****result = (usman)******
+
+
+
+select std_name,std_marks from student where std_marks like '_2' ***result (92 , 62)***
+
+
+
+
+
+
+
+select * from student 

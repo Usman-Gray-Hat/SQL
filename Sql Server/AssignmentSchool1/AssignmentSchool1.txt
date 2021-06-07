@@ -1,0 +1,48 @@
+create database school1
+use school1
+
+create table student
+(
+std_id int primary key identity,
+std_name varchar(20) not null,
+std_age tinyint not null,
+std_class int not null,
+std_marks int not null
+)
+
+insert into student values ('Saad',23,11,75)
+insert into student values ('Ali',27,14,92)
+insert into student values ('Raheel',23,12,72)
+insert into student values ('Zain',24,12,81)
+
+
+select * from student
+
+
+
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+--Display student names and marks of those students who obtain marks 
+ --in between 90 to 100--
+
+select std_name, std_marks from student where std_marks < = 100 and 
+std_marks > = 90
+
+
+select std_name, std_marks from student where std_marks between 90 
+and 100
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+
+
+
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+--Display student ids and names of those students whose age is 24 
+--or their marks must be greater than 90--
+
+select std_id,std_name,std_marks from student where std_age = 24
+OR std_marks > 90
+--------------------------------------------------------------------
+--------------------------------------------------------------------
