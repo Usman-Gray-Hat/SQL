@@ -1,0 +1,94 @@
+@model Assignment.Models.EmployeeTable
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        body {
+            background-color: rgba(27,31,34);
+        }
+    </style>
+
+</head>
+<body>
+    <div>
+
+     
+        <dl class="dl-horizontal">
+            <dt>
+                <b style="color:gray;">
+                    @Html.DisplayNameFor(model => model.Emp_ID)
+                </b>
+            </dt>
+
+            <dd>
+                <b style="color:white;">
+                    @Html.DisplayFor(model => model.Emp_ID)</b>
+</dd>
+
+            <dt>
+                <b style="color:gray;">
+                    @Html.DisplayNameFor(model => model.Emp_Name)
+                </b>
+            </dt>
+
+            <dd>
+                <b style="color:white;">
+                    @Html.DisplayFor(model => model.Emp_Name)</b>
+</dd>
+
+            <dt>
+                <b style="color:gray;">
+                    @Html.DisplayNameFor(model => model.Emp_Age)</b>
+            </dt>
+
+            <dd>
+                <b style="color:white;">
+                    @Html.DisplayFor(model => model.Emp_Age)</b>
+</dd>
+
+            <dt>
+                <b style="color:gray;">
+                    @Html.DisplayNameFor(model => model.Emp_Gender)</b>
+</dt>
+
+            <dd>
+                <b style="color:white;">
+                    @Html.DisplayFor(model => model.Emp_Gender)</b>
+</dd>
+
+            <dt>
+                <b style="color:gray;">
+                    @Html.DisplayNameFor(model => model.Emp_Salary)</b>
+</dt>
+
+            <dd>
+                <b style="color:white;">
+                    @Html.DisplayFor(model => model.Emp_Salary)</b>
+</dd>
+
+            <dt>
+                <b style="color:gray;">
+                    @Html.DisplayNameFor(model => model.Emp_Designation)</b>
+</dt>
+
+            <dd>
+                <b style="color:white;">
+                    @Html.DisplayFor(model => model.Emp_Designation)</b>
+</dd>
+
+        </dl>
+    </div>
+    <p>
+        <a class="btn btn-info" href="@Url.Action("Edit","Home",new { id=Model.Emp_ID})">Edit</a>
+        <a class="btn btn-success" href="@Url.Action("Index","Home")">Back to List</a>
+    </p>
+    <div style="margin-top:400px;"></div>
+</body>
+</html>
+

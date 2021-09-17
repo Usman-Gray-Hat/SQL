@@ -1,0 +1,100 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using Assignment.Models;
+using System.Data.Entity;
+
+
+namespace Assignment.Controllers
+{
+    public class HomeController : Controller
+    {
+        LoginDBEntities obj = new LoginDBEntities();
+        // GET: Home
+        public ActionResult Index(string search)
+        {
+            if (search!=null)
+            {
+                var data = obj.EmployeeTables.Where(x => x.Emp_Name.StartsWith(search)).ToList();
+                return View(data);
+            }
+            else
+            {
+                var data = obj.EmployeeTables.ToList();
+                return View(data);
+            }  
+        }
+
+        public ActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Create(EmployeeTable e)
+        {
+            if (ModelState.IsValid==true)
+            {
+                obj.EmployeeTables.Add(e);
+                int value = obj.SaveChanges();
+                if (value>0)
+                {
+                    ModelState.Clear();
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            return View();
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var row = obj.EmployeeTables.Where(x => x.Emp_ID == id).FirstOrDefault();
+            return View(row);
+        }
+        [HttpPost]
+        public ActionResult Edit(EmployeeTable e)
+        {
+            if (ModelState.IsValid==true)
+            {
+                obj.Entry(e).State = EntityState.Modified;
+                int value = obj.SaveChanges();
+                if (value>0)
+                {
+                    TempData["UpdateMessage"] = "<script>alert('Data updated successfully.!')</script>";
+                    ModelState.Clear();
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    TempData["UpdateMessage"] = "<script>alert('Data not updated')</script>";
+                }
+            }
+            return View();
+        }
+
+        public ActionResult Delete(int id)
+        {
+            var row = obj.EmployeeTables.Where(x => x.Emp_ID == id).FirstOrDefault();
+            if (row!=null)
+            {
+                obj.Entry(row).State = EntityState.Deleted;
+                obj.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
+
+        public ActionResult Details(int id)
+        {
+            var row = obj.EmployeeTables.Where(x => x.Emp_ID == id).FirstOrDefault();
+            return View(row);
+        }
+        public ActionResult LogOut()
+        {
+            Session.Abandon();
+            return RedirectToAction("Index", "Admin");
+        }
+
+    }
+}

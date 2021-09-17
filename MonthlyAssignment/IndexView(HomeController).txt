@@ -1,0 +1,115 @@
+@model IEnumerable<Assignment.Models.EmployeeTable>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        body
+        {
+            background-color: rgba(27,31,34);
+        }
+        #demo
+        {    
+            animation: MyAnimation 2s 1 ease-in-out;
+        }
+        @@keyframes MyAnimation
+        {
+            0%
+            {
+            color:black;
+            filter:blur(10px);
+            }
+        }
+    </style>
+</head>
+<body>
+    @Html.Raw(TempData["UpdateMessage"])
+    <div style="margin:90px;">
+        <h1 style="letter-spacing:5px; font-weight:900; text-align:center; color:gray;" id="demo">WELCOME TO PORTAL</h1>
+    </div> 
+    
+
+                              <!--For Search Bar-->
+    <div class="container">
+        
+            @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+            {
+                <p>
+                    @Html.TextBox("search", "", new { @class = "form-control", placeholder = "Search here" })
+                    <input type="submit" value="Search" name="" class="btn btn-default btn-block" />
+                </p>
+            }            
+    </div>
+        
+    <p>
+        <a class="btn btn-primary btn-block" href="@Url.Action("Create","Home")">Add Employee</a>
+        <a class="btn btn-danger btn-block" href="@Url.Action("LogOut","Home")">Logout</a>
+    </p>
+    <table class="table">
+        <tr>
+            <th style="color:gray;">
+                @Html.DisplayNameFor(model => model.Emp_Name)
+            </th>
+            <th style="color:gray;">
+                @Html.DisplayNameFor(model => model.Emp_Age)
+            </th>
+            <th style="color:gray;">
+                @Html.DisplayNameFor(model => model.Emp_Gender)
+            </th>
+            <th style="color:gray;">
+                @Html.DisplayNameFor(model => model.Emp_Salary)
+            </th>
+            <th style="color:gray;">
+                @Html.DisplayNameFor(model => model.Emp_Designation)
+            </th>
+            <th colspan="3" class="col-md-offset-10" style="color:gray;">Action</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="color:white;">
+                    @Html.DisplayFor(modelItem => item.Emp_Name)
+                </td>
+                <td style="color:white;">
+                    @Html.DisplayFor(modelItem => item.Emp_Age)
+                </td>
+                <td style="color:white;">
+                    @Html.DisplayFor(modelItem => item.Emp_Gender)
+                </td>
+                <td style="color:white;">
+                    @Html.DisplayFor(modelItem => item.Emp_Salary)
+                </td>
+                <td style="color:white;">
+                    @Html.DisplayFor(modelItem => item.Emp_Designation)
+                </td>
+                <td style="color:white;">
+
+                    <a class="btn btn-info" href="@Url.Action("Edit","Home",new {id=item.Emp_ID })">
+                        Edit
+                    </a>
+
+
+
+                    <a class="btn btn-success" href="@Url.Action("Details","Home",new {id=item.Emp_ID })">
+                        Details
+                    </a>
+
+
+                    <a class="btn btn-danger" href="@Url.Action("Delete","Home",new {id=item.Emp_ID })">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</body>
+</html>
+

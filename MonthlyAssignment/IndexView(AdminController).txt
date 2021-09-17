@@ -1,0 +1,63 @@
+@model Assignment.Models.AdminTable
+
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <title></title>
+    <link href="~/Scripts/style.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+</head>
+<body>
+
+</body>
+</html>
+
+@Html.Raw(TempData["LoginFailed"])
+
+<div style="margin-top:200px; margin-left:300px;">
+
+    @using (Html.BeginForm("Index", "Admin", FormMethod.Post))
+    {
+        <h1 id="demo" style="font-size:35px;">HELLO ADMIN.!</h1>
+                            <!--For Username-->
+        <p>
+        <b style="color:white;"> @Html.LabelFor(x => x.UserName, new { @class = "text-default" })</b>
+        @Html.TextBoxFor(x => x.UserName, new { @class = "form-control", placeholder = "Enter Username" })
+        @Html.ValidationMessageFor(x => x.UserName, "", new { @class = "text-danger" })
+        </p>
+
+                            <!--For Password-->
+        <p>
+        <b style="color:white;"> @Html.LabelFor(x => x.Password, new { @class = "text-default" })</b>
+        @Html.EditorFor(x => x.Password, new { htmlAttributes=new { @class = "form-control", placeholder = "Enter Password" } })
+        @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger" })</p>
+
+               <br />
+
+                            <!--For Login Button-->
+        <input type="submit" value="Login" class="btn btn-primary btn-block "/>
+    }
+
+</div>
+<div style="margin-top:400px;">
+<b class="text-danger text-center">  @TempData["LoginFailed"]</b>
+    </div>
+<style>
+    #demo
+    {
+        color:white;
+        font-weight:900;
+        letter-spacing:8px;
+        animation: anime 2s 1 ease-in-out
+    }
+    @@keyframes anime
+    {
+        0%
+        {
+            color:gray;
+            filter:blur(10px);
+        }
+    }
+    </style>
