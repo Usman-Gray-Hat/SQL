@@ -7,7 +7,7 @@ use LoginDB
 create table AdminTable
 (
 ID int primary key identity not null,
-Username varchar(50) not null,
+UserName varchar(50) not null,
 Password varchar(50) not null
 )
 --Inserting Data in Admin table--
