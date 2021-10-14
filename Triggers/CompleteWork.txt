@@ -1,0 +1,242 @@
+--Database--
+create database TriggerPractice
+use TriggerPractice
+
+--Creating Table--
+create table student
+(
+Std_ID int primary key identity not null,
+Std_Name varchar(40) not null,
+Std_Age tinyint not null,
+Std_Gender varchar(10) not null
+)
+
+--Inserting Data--
+insert into student values('Usman',24,'Male')
+insert into student values('Bilal',24,'Male')
+insert into student values('Raheel',23,'Male')
+insert into student values('Maryum',26,'Female')
+insert into student values('Rida',23,'Female')
+insert into student values('Zain',22,'Male')
+insert into student values('Aimen',21,'Female')
+select * from student
+
+
+--====>Triggers<====--
+--DML Triggers (Column level Trigger) (Events: Insert , Update , Delete)--
+--There are two types of DML Trigger (1) After Triggers  (2) Instead of Triggers.--
+
+--Creating DML Trigger (Type: After, Event: Insert)--
+create trigger Tr_Insert
+on student
+after insert
+as
+begin
+print('Data has stored')
+End
+
+insert into student values('Fahad',21,'Male')
+
+--For Displaying newly added record--
+create trigger Tr_Select_Insert
+on student
+after insert
+as
+begin
+select * from inserted
+End
+
+insert into student values('Zahid',21,'Male')
+
+--=============XXX=============--
+
+--Creating DML Trigger (Type: After, Event: Delete)--
+create trigger Tr_Delete
+on student 
+after delete
+as
+begin
+print('Record is deleted..!')
+End
+
+delete from student where Std_ID = 8
+
+--For Displaying current deleted record--
+create trigger Tr_Select_Delete
+on student 
+after delete
+as
+begin
+select * from deleted
+End
+
+delete from student where Std_ID = 9
+
+--=============XXX=============--
+
+--Creating DML Trigger (Type: After, Event: Update)--
+create trigger Tr_Update_Select
+on student
+after update
+as
+begin
+select * from deleted
+select * from inserted
+End
+
+update student
+set Std_Age = 25
+where Std_ID = 1
+
+--=============XXX=============--
+
+--For Audit Info of record manipulation in student table along with date and time-- 
+--For Insert-
+create table Audit
+(
+ID int primary key identity not null,
+Info varchar(max) not null
+)
+
+create trigger Tr_Audit_Insert
+on student 
+after insert
+as
+begin
+declare @id int
+select @id = Std_ID from inserted
+insert into Audit values('New data added with this ID '+ CAST(@id as varchar(50))+ 'Data added date is '+ CAST(GETDATE() as varchar(50)))
+End
+
+insert into student values ('Haris',28,'Male')
+select * from student
+select * from Audit
+
+--=============XXX=============--
+
+--For Delete--
+create trigger Tr_Audit_Delete
+on student 
+after delete
+as
+begin
+declare @id int
+select @id = Std_ID from deleted
+insert into Audit values('Data deleted of this ID ' + CAST(@id as varchar(50))+ ' Data deleted date is '+ CAST(GETDATE() as varchar(50)))
+End
+delete from student where Std_ID=10
+
+select * from student
+select * from Audit
+
+--=============XXX=============--
+
+--For Update--
+create trigger Tr_Audit_Update
+on student 
+after update
+as
+begin
+declare @id_Insert int
+declare @id_Delete int
+
+select @id_Insert = Std_ID from inserted
+
+insert into Audit values('Data updated with this ID: ' + CAST(@id_Insert as varchar(50)) + 'Data updated date is ' + CAST(GETDATE() as varchar(50)))
+End
+update student
+set Std_Age = 24
+where Std_ID = 3
+
+select * from student
+select * from Audit
+
+--=============XXX=============--
+
+--Creating DML Trigger (Type: Instead, Event: Insert)--
+create trigger Tr_Insert_Instead
+on student
+instead of insert
+as
+begin
+print('You cannot add data in this table')
+end
+insert into student values('Maaz',23,'Male')
+
+--=============XXX=============--
+
+--Creating DML Trigger (Type: Instead, Event: Delete)--
+create trigger Tr_Delete_Instead
+on student
+instead of delete
+as
+begin
+print('You cannot delete this record')
+end
+delete from student where Std_ID=1
+
+--=============XXX=============--
+
+--Creating DML Trigger (Type: Instead, Event: Update)--
+create trigger Tr_Update_Instead
+on student 
+instead of update
+as
+begin
+declare @id_Insert int
+select @id_Insert = Std_ID from inserted
+
+insert into Audit values('Someone tries to modify record of ID: ' + CAST(@id_Insert as varchar(50)) + ' attempted date is ' + CAST(GETDATE() as varchar(50)))
+End
+update student 
+set Std_Age = 23
+where Std_ID = 6
+
+select * from student
+select * from Audit
+
+--=============XXX=============--
+
+--DDL Triggers (Table level Trigger) (Events: Create , Alter , Drop)--
+--Creating DDL Trigger (Event: Create)--
+create trigger ForCreateTable
+on database
+for CREATE_TABLE 
+as
+begin
+print('Table created successfully')
+End
+
+create table demo
+(
+Demo_ID int primary key identity not null,
+Demo_Name varchar(30) not null
+)
+
+--=============XXX=============--
+
+--Creating DDL Trigger (Event: Alter)--
+create trigger ForAlterTable
+on database
+for ALTER_TABLE 
+as
+begin
+print('Table is modified')
+End
+
+alter table demo add Demo_Age int not null
+
+--=============XXX=============--
+
+--Creating DDL Trigger (Event: Drop)--
+create trigger ForDroppingTable
+on database
+for DROP_TABLE 
+as
+begin
+print('Table is deleted')
+End
+
+drop table demo
+
+--=============XXX=============--
